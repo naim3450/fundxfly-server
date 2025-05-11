@@ -82,7 +82,8 @@ module.exports.loginUser = async function (req, res) {
 }
 
 module.exports.getMe = async function (req, res) {
-    let decoded = jwt.verify(req?.cookies?.auth_token, process.env.JWT_KEY);
+    const auth_token = req.headers.authorization;
+    let decoded = jwt.verify(auth_token, process.env.JWT_KEY);
     try {
         const user = await userModel.findOne({ email: decoded?.email }); // Find the user by ID
         res.status(201).json(user); // Send a 201 Created response with the user data
