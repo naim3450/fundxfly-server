@@ -82,10 +82,8 @@ module.exports.loginUser = async function (req, res) {
 }
 
 module.exports.getMe = async function (req, res) {
-    const auth_token = req.headers.authorization;
-    let decoded = jwt.verify(auth_token, process.env.JWT_KEY);
     try {
-        const user = await userModel.findOne({ email: decoded?.email }); // Find the user by ID
+        const user = await userModel.findOne({ email: req.user?.email }); // Find the user by ID
         res.status(201).json(user); // Send a 201 Created response with the user data
     } catch (error) {
         res.status(400).json(error); // Send a 400 Bad Request response with the error message
