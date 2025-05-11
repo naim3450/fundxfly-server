@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-module.exports.isLoggedin = async function (req, res, next) {    
+module.exports = async function (req, res, next) {
     const auth_token = req?.headers?.authorization;
 
     if (!auth_token) {
@@ -9,12 +9,16 @@ module.exports.isLoggedin = async function (req, res, next) {
     }
 
     try {
-        let decoded = jwt.verify(auth_token, process.env.JWT_KEY);
-        let user = await userModel.findOne({ email: decoded.email }).select("-password");
+        const decoded = jwt.verify(auth_token, process.env.JWT_KEY);
+        const user = await userModel.findOne({ email: decoded.email }).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
         req.user = user;
-        next()
+        next();
     } catch (err) {
         return res.status(401).json({ message: err.message });
-        // res.redirect('/')
     }
-}
+};

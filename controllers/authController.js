@@ -83,9 +83,19 @@ module.exports.loginUser = async function (req, res) {
 
 module.exports.getMe = async function (req, res) {
     try {
-        const user = await userModel.findOne({ email: req.user?.email }); // Find the user by ID
-        res.status(201).json(user); // Send a 201 Created response with the user data
+        if (!req.user || !req.user.email) {
+            return res.status(400).json({ message: "Invalid user context" });
+        }
+
+        const user = await userModel.findOne({ email: req?.user?.email });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
     } catch (error) {
-        res.status(400).json(error); // Send a 400 Bad Request response with the error message
+        // console.error("Error in getMe:", error);
+        res.status(500).json({ message: error });
     }
-}
+};
