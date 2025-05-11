@@ -6,7 +6,7 @@ router.post('/register', registerUser); // This will call the createUser functio
 
 router.post('/login', loginUser);
 
-router.get('/me', isLoggedin, getMe);
+router.get('/me/:token', isLoggedin, getMe);
 
 
 module.exports = router;
