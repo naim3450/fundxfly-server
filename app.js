@@ -9,8 +9,9 @@ const cors = require('cors'); // Import CORS middleware
 app.use(cors({
     origin: [
         "http://localhost:3001",
-        "https://testpart.fundxfly.com",
         "https://fundxfly.com",
+        "https://admin.fundxfly.com",
+        "https://testpart.fundxfly.com",
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
@@ -25,7 +26,7 @@ app.use(cookieParser()) // Middleware to parse cookies
 
 // Basic route
 app.get('/', (req, res) => {
-    res.send('server is running');
+    res.send('The server is up and running.');
 });
 
 // Importing routes
