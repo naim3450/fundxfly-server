@@ -6,9 +6,9 @@ const monetagModule = require("../models/monetagModule");
 const messageModule = require("../models/messageModule");
 
 module.exports.approvePlanRequest = async function (req, res) {
-    const { email, status } = req.body; // e.g., { email: "new@example.com" }
+    const { email, status, expiry } = req.body; // e.g., { email: "new@example.com" }
     try {
-        const updatedUser = await userModel.findOneAndUpdate({ email }, { status }, { new: true });
+        const updatedUser = await userModel.findOneAndUpdate({ email }, { status, expiry: expiry || null }, { new: true });
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }

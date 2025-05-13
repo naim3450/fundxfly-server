@@ -17,13 +17,16 @@ module.exports.getIncomeDetails = async (req, res) => {
 };
 
 module.exports.updateIncomeDetails = async (req, res) => {
-    const { status, adds, income, refferIncome, investAmount } = req.body;
+    const { status, adds, income, refferIncome, refferIncome2, refferIncome3, investAmount, validity } = req.body;
     try {
         const obj = {
             status, adds: Number(adds),
             income: Number(income),
             refferIncome: Number(refferIncome),
-            investAmount: Number(investAmount)
+            refferIncome2: Number(refferIncome2),
+            refferIncome3: Number(refferIncome3),
+            investAmount: Number(investAmount),
+            validity: Number(validity),
         };
 
         if (!status) {

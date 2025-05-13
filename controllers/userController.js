@@ -13,7 +13,7 @@ module.exports.getUsers = async function (req, res) {
 }
 
 module.exports.planRequest = async function (req, res) {
-    const { planName, planPrice, paymentNumber, paymentType, userId, userEmail } = req.body; // Destructure the request body to get user data
+    const { planName, planPrice, paymentNumber, paymentType, validity, userId, userEmail } = req.body; // Destructure the request body to get user data
     const existingRequest = await requestModel.findOne({ userEmail });
     if (existingRequest) {
         return res.status(400).json({ message: 'Request already exists for this user' });
@@ -22,10 +22,11 @@ module.exports.planRequest = async function (req, res) {
         const request = await requestModel.create({
             planName,
             planPrice,
+            validity,
             paymentNumber: Number(paymentNumber),
             paymentType,
             userId,
-            userEmail
+            userEmail,
         });
         res.status(201).json({ message: 'Request created successfully', data: request });
     } catch (error) {
@@ -168,3 +169,46 @@ module.exports.updateAddsIndex = async function (req, res) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+module.exports.refferalLableIncome = async (req, res) => {
+    const { email, lable1, lable2, lable3 } = req.body;
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+
+        if (user?.refferby) {
+            const res2 = await userModel.findOneAndUpdate(
+                { refferCode: user?.refferby },
+                {
+                    $inc: { balance: lable1, totalEarnings: lable1, refferIncome: lable1, },
+                },
+                { new: true }
+            )
+            if (res2?.refferby) {
+                const res3 = await userModel.findOneAndUpdate(
+                    { refferCode: res2?.refferby },
+                    {
+                        $inc: { balance: lable2, totalEarnings: lable2, refferIncome: lable2, },
+                    },
+                    { new: true }
+                )
+                if (res3?.refferby) {
+                    const final = await userModel.findOneAndUpdate(
+                        { refferCode: res3?.refferby },
+                        {
+                            $inc: { balance: lable3, totalEarnings: lable3, refferIncome: lable3, },
+                        },
+                        { new: true }
+                    )
+                    res.status(201).json({ message: "Label 3 user income update", final });
+                }
+            }
+        }
+
+    } catch (error) {
+
+    }
+}

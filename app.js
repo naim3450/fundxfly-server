@@ -8,13 +8,13 @@ const cors = require('cors'); // Import CORS middleware
 
 app.use(cors({
     origin: [
-        "http://localhost:3001",
+        // "http://localhost:3001",
         "https://fundxfly.com",
         "https://admin.fundxfly.com",
         "https://testpart.fundxfly.com",
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:5175",
+        // "http://localhost:5173",
+        // "http://localhost:5174",
+        // "http://localhost:5175",
     ], // Allow requests from this origin
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));

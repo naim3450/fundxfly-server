@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    refferby: {
+        type: String,
+        default: null,
+    },
     refferUse: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
@@ -72,7 +76,11 @@ const userSchema = new mongoose.Schema({
     addsIndex: {
         type: Array,
         default: []
-    }
+    },
+    expiry: {
+        type: Date,
+        default: null,
+    },
 });
 
 module.exports = mongoose.model('user', userSchema);

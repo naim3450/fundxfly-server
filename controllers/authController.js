@@ -32,13 +32,14 @@ module.exports.registerUser = async function (req, res) {
                     password: hash,
                     number,
                     refferCode: generateReferralCode(name),
+                    refferby: refferby || null
                 });
 
                 const refferUser = await userModel.findOneAndUpdate(
                     { refferCode: refferby },
                     {
                         // $set: { refferIncome },
-                        $inc: { balance: 0.2, totalEarnings: 0.2, refferIncome: 0.2, },
+                        // $inc: { balance: 0.2, totalEarnings: 0.2, refferIncome: 0.2, },
                         $push: { refferUse: user._id },
                     },
                     { new: true }
@@ -51,7 +52,7 @@ module.exports.registerUser = async function (req, res) {
                     message: 'User created successfully',
                     status: 'success',
                     token,
-                    useRefferUser: { refferUser, message: "update reffer income" }
+                    useRefferUser: { refferUser, message: "update reffer user" }
                 }); // Send a 201 Created response with the user data
             })
         })
