@@ -26,7 +26,7 @@ app.use(cookieParser()) // Middleware to parse cookies
 
 // Basic route
 app.get('/', (req, res) => {
-    res.send('The server is up and running.');
+    res.send('server is running.');
 });
 
 // Importing routes
