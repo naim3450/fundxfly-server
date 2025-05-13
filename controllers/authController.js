@@ -82,6 +82,25 @@ module.exports.loginUser = async function (req, res) {
     res.status(200).json({ user: existingUser, token }); // Send a 200 OK response with the user data and token
 }
 
+module.exports.resetPass = async function (req, res) {
+    const { email, password } = req.body; // Destructure the request body to get user data
+    // Check if the user already exists
+    const existingUser = await userModel.findOne({ email });
+    if (!existingUser) { // If the user does not exist, send a 400 Bad Request response
+        return res.status(400).json({ message: "User does not exist", status: 400 });
+    }
+
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(password, salt, async function (err, hash) {
+            const user = await userModel.findOneAndUpdate({ email }, { password: hash }, { new: true });
+            res.status(201).json({
+                user,
+                message: 'Password reset successfully',
+            }); // Send a 201 Created response with the user data
+        })
+    })
+}
+
 module.exports.getMe = async function (req, res) {
     try {
         if (!req.user || !req.user.email) {
