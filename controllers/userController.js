@@ -46,8 +46,8 @@ module.exports.getPlanRequest = async function (req, res) {
 module.exports.withdrawRequest = async function (req, res) {
     const { userId, userEmail, number, amount, } = req.body; // Destructure the request body to get user data
 
-    if (amount < 5) {
-        return res.status(400).json({ message: 'Amount must be greater than $ 50' });
+    if (amount < 2) {
+        return res.status(400).json({ message: 'Amount must be $ 2' });
     }
 
     const existingRequest = await withdrawModel.findOne({ userEmail });
