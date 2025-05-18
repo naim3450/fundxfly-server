@@ -10,7 +10,7 @@ app.use(cors({
     origin: [
         // "http://localhost:3001",
         "https://fundxfly.com",
-        "https://admin.fundxfly.com",
+        "http://dashboard.fundxfly.com",
         "https://testpart.fundxfly.com",
         // "http://localhost:5173",
         // "http://localhost:5174",
