@@ -106,7 +106,6 @@ module.exports.getMe = async function (req, res) {
         if (!req.user || !req.user.email) {
             return res.status(400).json({ message: "Invalid user context" });
         }
-        console.log(req?.user?.email);
 
         const user = await userModel.findOne({ email: req?.user?.email });
 

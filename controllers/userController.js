@@ -44,7 +44,7 @@ module.exports.getPlanRequest = async function (req, res) {
 }
 
 module.exports.withdrawRequest = async function (req, res) {
-    const { userId, userEmail, number, amount, } = req.body; // Destructure the request body to get user data
+    const { userId, userEmail, number, amount, type, } = req.body; // Destructure the request body to get user data
 
     if (amount < 2) {
         return res.status(400).json({ message: 'Amount must be $ 2' });
@@ -58,8 +58,9 @@ module.exports.withdrawRequest = async function (req, res) {
         const request = await withdrawModel.create({
             userId,
             userEmail,
-            number: Number(number),
+            number,
             amount,
+            type,
         });
         res.status(201).json({ message: 'Withdraw request send successfully', data: request });
     } catch (error) {
