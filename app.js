@@ -12,8 +12,8 @@ app.use(cors({
         "https://fundxfly.com",
         "http://dashboard.fundxfly.com",
         "https://admin.fundxfly.com",
-        "http://localhost:5173",
-        "http://localhost:5174",
+        // "http://localhost:5173",
+        // "http://localhost:5174",
         // "http://localhost:5175",
     ], // Allow requests from this origin
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
