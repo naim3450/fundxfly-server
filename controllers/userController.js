@@ -30,7 +30,7 @@ module.exports.planRequest = async function (req, res) {
             planName,
             planPrice,
             validity,
-            paymentNumber: Number(paymentNumber),
+            paymentNumber,
             paymentType,
             userId,
             userEmail,
