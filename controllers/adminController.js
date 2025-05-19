@@ -5,6 +5,19 @@ const withdrawModel = require("../models/withdrawModel");
 const monetagModule = require("../models/monetagModule");
 const messageModule = require("../models/messageModule");
 
+module.exports.deleteUser = async function (req, res) {
+    const { email } = req.body; // e.g., { email: "new@example.com" }
+    try {
+        const deleteUser = await userModel.deleteOne({ email });
+        res.status(200).json({
+            message: "User deleted successfully",
+            user: deleteUser,
+        });
+
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+}
 module.exports.approvePlanRequest = async function (req, res) {
     const { email, status, expiry } = req.body; // e.g., { email: "new@example.com" }
     try {

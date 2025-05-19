@@ -4,8 +4,15 @@ const userModel = require("../models/userModel");
 const withdrawModel = require("../models/withdrawModel");
 
 module.exports.getUsers = async function (req, res) {
+    const query = {};
+
+    if (req.query.name) {
+        // Regex to match names that start with the given letter (case-insensitive)
+        query.name = { $regex: '^' + req.query.name, $options: 'i' };
+    }
+
     try {
-        const user = await userModel.find();
+        const user = await userModel.find(query);
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
