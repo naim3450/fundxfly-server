@@ -21,7 +21,13 @@ module.exports.deleteUser = async function (req, res) {
 module.exports.approvePlanRequest = async function (req, res) {
     const { email, status, expiry } = req.body; // e.g., { email: "new@example.com" }
     try {
-        const updatedUser = await userModel.findOneAndUpdate({ email }, { status, expiry: expiry || null }, { new: true });
+        const updatedUser = await userModel.findOneAndUpdate(
+            { email },
+            {
+                $set: { status, expiry: expiry || null, addsIndex: [], count: 0, },
+            },
+            { new: true }
+        );
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
