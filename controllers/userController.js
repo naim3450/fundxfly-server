@@ -87,7 +87,7 @@ module.exports.getWithdrawRequest = async function (req, res) {
 
 module.exports.updateMyBalance = async function (req, res) {
     const { email, count, countDate, balance } = req.body; // e.g., { email: "new@example.com" }    
-    const data = await userDataUpdate(email, { count, countDate, balance }, "User data updated successfully");
+    const data = await userDataUpdate(email, { count: Number(count), countDate, balance: Number(balance) }, "User data updated successfully");
     if (data.status === 404) {
         res.status(404).json({ message: data.message });
         return;
@@ -104,7 +104,7 @@ module.exports.updateMyBalance = async function (req, res) {
 
 module.exports.updateTotalEarnings = async function (req, res) {
     const { email, totalEarnings } = req.body; // e.g., { email: "new@example.com" }    
-    const data = await userDataUpdate(email, { totalEarnings: totalEarnings }, "User data updated successfully");
+    const data = await userDataUpdate(email, { totalEarnings: Number(totalEarnings) }, "User data updated successfully");
     if (data.status === 404) {
         res.status(404).json({ message: data.message });
         return;

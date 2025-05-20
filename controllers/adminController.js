@@ -18,6 +18,7 @@ module.exports.deleteUser = async function (req, res) {
         res.status(400).send(err.message);
     }
 }
+
 module.exports.approvePlanRequest = async function (req, res) {
     const { email, status, expiry } = req.body; // e.g., { email: "new@example.com" }
     try {
