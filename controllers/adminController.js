@@ -120,7 +120,7 @@ module.exports.createMessage = async function (req, res) {
     try {
         const ms = await messageModule.findOneAndUpdate(
             { type },                 // filter
-            { $set: { title, message } },       // update fields
+            { $set: { title, message, createdAt: Date.now(), } },       // update fields
             { new: true, upsert: true }, // return new doc, create if not exists
         );
         if (ms.length == 0) {
